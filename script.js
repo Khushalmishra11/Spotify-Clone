@@ -23,16 +23,21 @@ let songs = [
 
 
 // Handle play/pause click
-masterPlay.addEventListener('click', ()=>{
-    if(audioElement.paused || audioElement.currentTime<=0){
+// Update Seekbar
+masterPlay.addEventListener('click', () => {
+    if(audioElement.paused || audioElement.currentTime <= 0){
         audioElement.play();
+        masterPlay.classList.remove('fa-play-circle');
+        masterPlay.classList.add('fa-pause-circle');
+    } else {
+        audioElement.pause();
+        masterPlay.classList.add('fa-play-circle');
+        masterPlay.classList.remove('fa-pause-circle');
     }
-})
+    
+});
 
-// Listen to event
-myProgressBar.addEventListener('timeupdate',()=>{
-    console.log('timeupdate');
-
-})
-
-
+// Handle seekbar change
+myProgressBar.addEventListener('change', () => {
+    audioElement.currentTime = myProgressBar.value * audioElement.duration / 100;
+});
